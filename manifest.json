@@ -9,13 +9,15 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "https://placehold.co/192x192/ffc107/333333?text=Icon",
+      "src": "https://googleusercontent.com/image_generation_content/0
+
+",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "https://placehold.co/512x512/ffc107/333333?text=Icon",
+      "src": "https://googleusercontent.com/image_generation_content/1",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
