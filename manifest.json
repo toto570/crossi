@@ -1,0 +1,24 @@
+{
+  "name": "クロッシーロード風ゲーム",
+  "short_name": "クロッシー",
+  "description": "車をよけてどこまでも進む、シンプルなアクションゲームです。",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#333333",
+  "theme_color": "#87ceeb",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://placehold.co/192x192/ffc107/333333?text=Icon",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://placehold.co/512x512/ffc107/333333?text=Icon",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ]
+}
