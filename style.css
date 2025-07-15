@@ -1,0 +1,105 @@
+/* 基本的なページのスタイル */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /* スクロールバーを隠す */
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* 縦並びに変更 */
+    justify-content: center;
+    align-items: center;
+    background-color: #333; /* 背景色を濃いめに */
+    color: #fff;
+    font-family: 'Helvetica Neue', 'Arial', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px; /* PCでの最大幅を指定 */
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+h1 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 1.8em;
+}
+
+.instructions {
+    margin-top: 0;
+    font-size: 0.9em;
+}
+
+/* ゲームの盤面 */
+#game-container {
+    width: 100%;
+    /* 縦横比を 2:3 に保つ */
+    height: calc(100vw * 1.5); 
+    max-height: 600px;
+    background-color: #87ceeb; /* 空の色 */
+    border: 5px solid #333;
+    position: relative;
+    overflow: hidden; /* 盤面からはみ出た要素を隠す */
+    box-sizing: border-box;
+    touch-action: none; /* スワイプ操作時の画面スクロールを無効化 */
+}
+
+/* プレイヤーキャラクター */
+#player {
+    /* サイズと位置はJavaScriptで動的に設定 */
+    background-color: #ffc107; /* 黄色 */
+    border: 2px solid #333;
+    box-sizing: border-box;
+    position: absolute;
+    transition: all 0.1s linear; /* スムーズな移動のため */
+}
+
+/* 障害物（車など）の共通スタイル */
+.obstacle {
+    background-color: #f44336; /* 赤色 */
+    border: 2px solid #333;
+    box-sizing: border-box;
+    position: absolute;
+}
+
+/* スコアボード */
+#score-board {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+/* ゲームオーバー画面 */
+#game-over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 20px 40px;
+    border-radius: 10px;
+    z-index: 100; /* 他の要素より手前に表示 */
+    width: 80%;
+}
+
+#restart-button {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* 最初は非表示にするためのクラス */
+.hidden {
+    display: none;
+}
