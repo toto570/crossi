@@ -1,1 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <!-- レスポンシブデザインのためのビューポート設定 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- PWA関連のメタタグ -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="クロッシーゲーム">
+    <meta name="apple-mobile-web-app-title" content="クロッシーゲーム">
+    <meta name="msapplication-starturl" content="/index.html">
+    
+    <!-- ブラウザのUIのテーマカラー -->
+    <meta name="theme-color" content="#87ceeb">
+
+    <title>クロッシーロード風ゲーム</title>
+
+    <!-- マニフェストファイルへのリンク -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- スタイルシートへのリンク -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>クロッシーロード風ゲーム</h1>
+        <p class="instructions">矢印キーまたはスワイプでキャラクターを操作！</p>
+
+        <div id="score-board">
+            スコア: <span id="score">0</span>
+        </div>
+
+        <div id="game-container">
+            <div id="player"></div>
+        </div>
+
+        <div id="game-over" class="hidden">
+            <h2>ゲームオーバー</h2>
+            <p>最終スコア: <span id="final-score">0</span></p>
+            <button id="restart-button">もう一度遊ぶ</button>
+        </div>
+    </div>
+
+    <!-- ゲームロジックのスクリプト -->
+    <script src="app.js"></script>
+
+    <!-- Service Workerの登録スクリプト -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
 
