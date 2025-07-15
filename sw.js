@@ -1,58 +1,69 @@
-// キャッシュの名前とバージョンの定義
-const CACHE_NAME = 'crossy-road-cache-v1';
+// Service Worker for PWA
 
+const CACHE_NAME = 'crossy-road-pwa-cache-v1';
 // キャッシュするファイルのリスト
 const urlsToCache = [
   '/',
   '/index.html',
-  '/styles.css',
-  '/app.js'
-  // アイコン画像など、他にキャッシュしたいファイルがあればここに追加
+  'https://cdn.tailwindcss.com',
+  // アイコンもキャッシュする場合はここに追加します
+  // 'https://placehold.co/192x192/facc15/1f2937?text=C',
+  // 'https://placehold.co/512x512/facc15/1f2937?text=C'
 ];
 
-// Service Workerのインストールイベント
+// installイベント: Service Workerがインストールされたときに発生
 self.addEventListener('install', event => {
-  // インストール処理
+  console.log('Service Worker: Installing...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Opened cache');
+        console.log('Service Worker: Caching app shell');
         return cache.addAll(urlsToCache);
+      })
+      .then(() => {
+        console.log('Service Worker: Installation complete');
+        return self.skipWaiting();
       })
   );
 });
 
-// Service Workerの有効化イベント
+// activateイベント: Service Workerが有効になったときに発生
 self.addEventListener('activate', event => {
-  const cacheWhitelist = [CACHE_NAME];
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          // 古いバージョンのキャッシュがあれば削除
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
+    console.log('Service Worker: Activating...');
+    // 古いキャッシュを削除する
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cache => {
+                    if (cache !== CACHE_NAME) {
+                        console.log('Service Worker: Clearing old cache', cache);
+                        return caches.delete(cache);
+                    }
+                })
+            );
+        }).then(() => {
+            console.log('Service Worker: Activation complete');
+            return self.clients.claim();
         })
-      );
-    })
-  );
+    );
 });
 
-// fetchイベント（ネットワークリクエストへの介入）
+
+// fetchイベント: ページがリソースをリクエストしたときに発生
 self.addEventListener('fetch', event => {
+  // console.log('Service Worker: Fetching', event.request.url);
   event.respondWith(
-    // まずキャッシュ内にリクエストされたリソースがあるか確認
+    // 1. キャッシュにリソースがあるか確認
     caches.match(event.request)
       .then(response => {
-        // キャッシュにあれば、それを返す
+        // 2. キャッシュにあれば、それを返す
         if (response) {
+          // console.log('Service Worker: Found in cache', event.request.url);
           return response;
         }
-
-        // キャッシュになければ、ネットワークにリクエストを送信
+        // 3. キャッシュになければ、ネットワークから取得
+        // console.log('Service Worker: Not in cache, fetching from network', event.request.url);
         return fetch(event.request);
-      }
-    )
+      })
   );
 });
